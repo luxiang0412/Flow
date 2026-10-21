@@ -1,10 +1,15 @@
 name: Flow CI
 
-# Prototype 01 CI (contract §7.2). The runner must ship full Xcode 27.x;
-# GitHub macOS-15/macOS-14 images are used as a reference but the job prints
-# the ACTUAL xcodebuild version and fails loudly if Xcode is missing. Never
-# silently uses a Beta Xcode: we install/select only what the workflow spec
-# allows and record BLOCKED otherwise.
+# Prototype 01 CI (contract §7/P7).
+#
+# Scope: regenerate the Xcode project, build for a simulator and run the unit +
+# UI tests. Device-level validation (real touch feel, Apple Pencil, GPU pass
+# timings, 10-minute device runs) is NOT covered here and must not be inferred
+# from a green run — see docs/PERFORMANCE.md and docs/PROGRESS.md.
+#
+# The job prints the ACTUAL xcodebuild version. If the runner does not provide
+# the Xcode required by project.yml, the failure is reported as an environment
+# limitation instead of being silently worked around with a Beta toolchain.
 
 on:
   push:
@@ -14,7 +19,7 @@ on:
 
 jobs:
   build-and-test:
-    name: xcodegen → build → test (simulator)
+    name: xcodegen / build / test (simulator)
     runs-on: macos-15
     timeout-minutes: 45
     steps:
@@ -24,36 +29,42 @@ jobs:
         run: |
           set -o pipefail
           xcodebuild -version
-          xcrun simctl list runtimes | head -20
+          xcrun simctl list runtimes
 
-      - name: Install XcodeGen pin
+      - name: Install XcodeGen
         run: |
-          command -v brew || { echo "no brew"; exit 1; }
+          set -o pipefail
+          command -v brew || { echo "Homebrew missing on runner"; exit 1; }
           brew list xcodegen >/dev/null 2>&1 || brew install xcodegen
           xcodegen --version
 
       - name: Regenerate project
         run: |
+          set -o pipefail
           xcodegen generate --spec project.yml
           xcodebuild -list -project Flow.xcodeproj
 
       - name: Resolve simulator
         id: sim
         run: |
-          python3 --version || true
-          UDID=$(xcrun simctl list devices available -j | python3 -c '
-import json,sys
-d=json.load(sys.stdin)
-for rt,devs in d["devices"].items():
-    for x in devs:
-        if x.get("isAvailable"):
-            print(x["udid"]); sys.exit(0)
-')
-          echo "udid=$UDID" >> "$GITHUB_OUTPUT"
+          set -o pipefail
+          # Prefer an iPhone simulator, else take the first available device.
+          UDID=$(xcrun simctl list devices available \
+            | grep -E "^ +iPhone .*\([0-9A-F-]+\) *\(" \
+            | grep -oE "[0-9A-F]{8}(-[0-9A-F]+)+" | head -1)
+          if [ -z "$UDID" ]; then
+            UDID=$(xcrun simctl list devices available \
+              | grep -oE "[0-9A-F]{8}(-[0-9A-F]+)+" | head -1)
+          fi
+          if [ -z "$UDID" ]; then
+            echo "No simulator available on this runner"; exit 1
+          fi
           echo "using simulator $UDID"
+          echo "udid=$UDID" >> "$GITHUB_OUTPUT"
 
       - name: Build (Debug, simulator)
         run: |
+          set -o pipefail
           mkdir -p ci
           xcodebuild -project Flow.xcodeproj -scheme Flow \
             -configuration Debug \
@@ -63,12 +74,13 @@ for rt,devs in d["devices"].items():
 
       - name: Test (Debug, simulator)
         run: |
+          set -o pipefail
           mkdir -p ci
           xcodebuild -project Flow.xcodeproj -scheme Flow \
             -configuration Debug \
             -destination "platform=iOS Simulator,id=${{ steps.sim.outputs.udid }}" \
             -derivedDataPath .build CODE_SIGNING_ALLOWED=NO \
-            -resultBundlePath ci/Flow-$(date +%Y%m%d-%H%M%S).xcresult \
+            -resultBundlePath "ci/Flow-result.xcresult" \
             test 2>&1 | tee ci/test-simulator.log
 
       - name: Upload logs (retention 3 days)
@@ -77,18 +89,24 @@ for rt,devs in d["devices"].items():
         with:
           name: ci-logs
           path: |
-            ci/*.log
-            ci/*.xcresult
-            Flow.xcodeproj/project.pbxproj
+            ci/
           retention-days: 3
+          if-no-files-found: warn
 
       - name: Strict gate
         if: always()
         run: |
-          grep -q "BUILD SUCCEEDED" ci/build-simulator.log || { echo "build failed"; exit 1; }
-          grep -q "TEST SUCCEEDED" ci/test-simulator.log || { echo "tests failed"; exit 1; }
+          grep -qE "BUILD SUCCEEDED" ci/build-simulator.log || { echo "build did not succeed"; exit 1; }
+          grep -qE "TEST SUCCEEDED" ci/test-simulator.log || { echo "tests did not succeed"; exit 1; }
+          echo "CI scope passed: regenerate + build + test on the simulator"
 
-  note:
+  scope-note:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Device/GPU-level validation is NOT covered by CI; see docs/PERFORMANCE.md for scope."
+      - name: State CI coverage limits
+        run: |
+          echo "Not covered by CI (requires hardware):"
+          echo "  - real multi-touch feel and Apple Pencil pressure/tilt"
+          echo "  - GPU pass timings, thermals, 120 Hz behaviour"
+          echo "  - 10-minute device stability runs"
+          echo "See docs/PERFORMANCE.md and docs/PROGRESS.md."
