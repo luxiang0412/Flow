@@ -15,6 +15,12 @@ import simd
 ///  - device / queue / pipelines / full-size textures are created once.
 ///  - small per-frame *uniform/event buffers* are allocated per fixed step
 ///    (a few KB) to avoid in-flight write hazards; documented in DECISIONS.md.
+///
+/// Isolation: `@MainActor` because it owns the `MTKView` (main-actor isolated in
+/// Xcode 16.4+) and is created from `UIViewRepresentable.makeUIView`. MTKView
+/// drives `draw(in:)` on the main run loop, so the delegate entry points are
+/// `nonisolated` shims that use `MainActor.assumeIsolated`.
+@MainActor
 final class FlowRenderer: NSObject, MTKViewDelegate {
 
     // MARK: Dependencies
@@ -57,7 +63,7 @@ final class FlowRenderer: NSObject, MTKViewDelegate {
     /// Small pool of shared readback buffers so several captures can be in flight.
     private var readbackPool: [MTLBuffer] = []
     private var readbackCursor = 0
-    private let pngQueue = DispatchQueue(label: "flow.capture.png", qos: .utility)
+    nonisolated private let pngQueue = DispatchQueue(label: "flow.capture.png", qos: .utility)
     /// True when composite+bloom were already encoded for the current frame
     /// (replay capture path encodes them mid-step; display reuses the result).
     private var compositeEncodedThisFrame = false
@@ -141,11 +147,15 @@ final class FlowRenderer: NSObject, MTKViewDelegate {
     }
 
     // MARK: MTKViewDelegate
-    func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
-        resizeTo(drawable: size)
+    nonisolated func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
+        MainActor.assumeIsolated { resizeTo(drawable: size) }
     }
 
-    func draw(in view: MTKView) {
+    nonisolated func draw(in view: MTKView) {
+        MainActor.assumeIsolated { renderFrame(in: view) }
+    }
+
+    private func renderFrame(in view: MTKView) {
         guard ShaderBridge.assertLayouts() else { return }
         metrics.beginFrame()
         metrics.stepsLastFrame = 0
@@ -563,9 +573,15 @@ final class FlowRenderer: NSObject, MTKViewDelegate {
                   destinationBytesPerRow: capture.width * 4,
                   destinationBytesPerImage: capture.width * capture.height * 4)
         blit.endEncoding()
-        commandBuffer.addCompletedHandler { [weak self] _ in
-            guard let self else { return }
-            self.finishCapture(readback: readback, w: capture.width, h: capture.height, url: url)
+        // Completion handlers run off the main thread. The buffer is only read
+        // after the GPU finished with it, so hand it over explicitly.
+        nonisolated(unsafe) let readbackRef = readback
+        let cw = capture.width, ch = capture.height
+        let queue = pngQueue
+        let isDump = dumpInterval > 0
+        commandBuffer.addCompletedHandler { _ in
+            Self.writeCapturePNG(readback: readbackRef, w: cw, h: ch, url: url,
+                                 queue: queue, quiet: isDump)
         }
     }
 
@@ -590,7 +606,11 @@ final class FlowRenderer: NSObject, MTKViewDelegate {
         return b
     }
 
-    private func finishCapture(readback: MTLBuffer, w: Int, h: Int, url: URL) {
+    /// Nonisolated: runs on the command buffer's completion thread and touches
+    /// no main-actor state. Copies the readback bytes and writes a PNG.
+    nonisolated private static func writeCapturePNG(readback: MTLBuffer, w: Int, h: Int,
+                                                   url: URL, queue: DispatchQueue,
+                                                   quiet: Bool) {
         #if os(macOS)
         readback.didModifyRange(0..<readback.length)
         #endif
@@ -599,7 +619,7 @@ final class FlowRenderer: NSObject, MTKViewDelegate {
         let data = Data(bytes: bytes, count: length)   // copy off the GPU buffer
         do {
             let w2 = w, h2 = h
-            pngQueue.async {
+            queue.async {
                 do {
                     try data.withUnsafeBytes { raw in
                         let ptr = UnsafeMutableRawPointer(mutating: raw.baseAddress!)
@@ -609,7 +629,7 @@ final class FlowRenderer: NSObject, MTKViewDelegate {
                     ErrorStatus.shared.record(severity: .warning, source: "capture", "\(error)")
                 }
             }
-            if dumpInterval == 0 {
+            if !quiet {
                 NSLog("[Flow][capture] saved \(url.path) (\(w)x\(h))")
             }
         }
@@ -632,12 +652,14 @@ final class FlowRenderer: NSObject, MTKViewDelegate {
                                          height: (tex.mainDims.y + 7) / 8, depth: 1),
                                  threadsPerThreadgroup: MTLSize(width: min(ps.threadExecutionWidth, 8), height: 8, depth: 1))
         enc.endEncoding()
+        nonisolated(unsafe) let statsBuffer = buffer
         commandBuffer.addCompletedHandler { [weak self] _ in
-            guard let self else { return }
-            let ptr = buffer.contents().assumingMemoryBound(to: UInt32.self)
-            self.metrics.nanCount = UInt(ptr[0])
-            self.metrics.infCount = UInt(ptr[1])
-            _ = ptr[2]; _ = ptr[3]
+            let ptr = statsBuffer.contents().assumingMemoryBound(to: UInt32.self)
+            let nan = UInt(ptr[0]), inf = UInt(ptr[1])
+            Task { @MainActor [weak self] in
+                self?.metrics.nanCount = nan
+                self?.metrics.infCount = inf
+            }
         }
     }
 
@@ -774,14 +796,15 @@ final class FlowRenderer: NSObject, MTKViewDelegate {
         Self.simHeightForStatic(pixelW: pixelW, pixelH: pixelH, config: config)
     }
 
-    // Static sizing mirrors so tests can validate without an instance.
-    static func simWidthForStatic(pixelW: Int, pixelH: Int, config: SimulationConfig) -> Int {
+    // Pure sizing math — marked nonisolated so tests and tooling can call it
+    // from any context without hopping to the main actor.
+    nonisolated static func simWidthForStatic(pixelW: Int, pixelH: Int, config: SimulationConfig) -> Int {
         let short = config.gridPreset.shortSideTexels
         let aspect = Double(max(pixelW, 1)) / Double(max(pixelH, 1))
         let longSide = Int(Float(short) * Float(max(aspect, 1.0 / max(aspect, 1e-4))))
         return pixelW >= pixelH ? min(longSide, config.maxLongSideTexels) : short
     }
-    static func simHeightForStatic(pixelW: Int, pixelH: Int, config: SimulationConfig) -> Int {
+    nonisolated static func simHeightForStatic(pixelW: Int, pixelH: Int, config: SimulationConfig) -> Int {
         let short = config.gridPreset.shortSideTexels
         let aspect = Double(max(pixelW, 1)) / Double(max(pixelH, 1))
         let longSide = Int(Float(short) * Float(max(aspect, 1.0 / max(aspect, 1e-4))))
