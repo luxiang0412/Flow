@@ -83,6 +83,20 @@ jobs:
             -resultBundlePath "ci/Flow-result.xcresult" \
             test 2>&1 | tee ci/test-simulator.log
 
+      - name: Collect crash diagnostics
+        if: failure()
+        run: |
+          mkdir -p ci/crashes
+          # Simulator crash reports and the app's own console output.
+          find ~/Library/Logs/DiagnosticReports -name "*.ips" -newermt "-30 minutes" \
+            -exec cp {} ci/crashes/ \; 2>/dev/null || true
+          find ~/Library/Developer/CoreSimulator/Devices -path "*Logs/CrashReporter*" \
+            -name "*.ips" -newermt "-30 minutes" -exec cp {} ci/crashes/ \; 2>/dev/null || true
+          ls -la ci/crashes || true
+          # Extract the failing test details from the result bundle.
+          xcrun xcresulttool get test-results tests --path "ci/Flow-result.xcresult" \
+            > ci/tests.json 2>/dev/null || true
+
       - name: Upload logs (retention 3 days)
         if: always()
         uses: actions/upload-artifact@v4

@@ -147,13 +147,35 @@ final class FlowRenderer: NSObject, MTKViewDelegate {
     }
 
     // MARK: MTKViewDelegate
+    //
+    // MTKView normally drives these on the main thread, but that is a runtime
+    // guarantee we should not *trap* on: `MainActor.assumeIsolated` aborts the
+    // process if it is ever called elsewhere (observed as an unexplained crash
+    // on the CI runner). Hop to the main actor instead when needed.
     nonisolated func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
-        MainActor.assumeIsolated { resizeTo(drawable: size) }
+        if Thread.isMainThread {
+            MainActor.assumeIsolated { resizeTo(drawable: size) }
+        } else {
+            NSLog("[Flow][warn] drawableSizeWillChange off-main; hopping to main actor")
+            Task { @MainActor [weak self] in self?.resizeTo(drawable: size) }
+        }
     }
 
     nonisolated func draw(in view: MTKView) {
-        MainActor.assumeIsolated { renderFrame(in: view) }
+        if Thread.isMainThread {
+            MainActor.assumeIsolated { renderFrame(in: view) }
+        } else {
+            // Cannot send MTKView across actors, so re-enter on the next run loop.
+            NSLog("[Flow][warn] draw off-main; hopping to main actor")
+            Task { @MainActor [weak self] in
+                guard let self, let v = self.viewOrNil else { return }
+                self.renderFrame(in: v)
+            }
+        }
     }
+
+    /// Main-actor view reference used by the off-main fallback path.
+    var viewOrNil: FlowMetalView? { view }
 
     private func renderFrame(in view: MTKView) {
         guard ShaderBridge.assertLayouts() else { return }
