@@ -135,3 +135,35 @@ $ command -v xcrun || true
   | /usr/bin/xcrun
   [exit=0]
 
+
+## 5. 模拟器清理记录（2026-10-21）
+
+用户决定暂停 iOS 开发、仅保留 macOS 开发环境，因此清理了 iOS 模拟器相关数据：
+
+| 对象 | 释放 |
+|---|---|
+| 44 个模拟器设备（含 App 与数据） | ~4.6 GB |
+| 4 个 iOS 模拟器运行时（18.0 / 18.2 / 18.6 / 26.2） | ~20 GB |
+| 部分运行时安装镜像（AssetsV2 中被 simctl 一并清理的） | ~8 GB |
+| `~/Library/Developer/Xcode/iOS DeviceSupport` | 4.5 GB |
+| 全局 `~/Library/Developer/Xcode/DerivedData` | 372 MB |
+
+结果：可用空间 32 GiB → **62 GiB**。
+
+**未能清理的 25 GB**：`/System/Volumes/Data/System/Library/AssetsV2/com_apple_MobileAsset_iOSSimulatorRuntime`
+下残留 3 个 `.dmg`（分别 8.4 / 8.5 / 8.0 GB）。这些目录带有 SIP 的 `restricted` 标志，
+即使 root 也无法删除（`Operation not permitted`），且 `simctl runtime delete`
+的注册表里已无对应条目（`--notUsedSinceDays` 也匹配不到）。可行的处理方式：
+
+1. 交给 macOS 的资产垃圾回收自动清理（通常数周，或在磁盘紧张时触发）；
+2. 或在 Xcode → Settings… → Components 中查看是否有残留条目可删；
+3. 不建议为此关闭 SIP。
+
+**保留项**：`com_apple_MobileAsset_MetalToolchain`（881 MB，macOS Metal 开发需要）、
+Xcode 27.1 本身、签名证书与描述文件。
+
+恢复 iOS 模拟器：
+```bash
+xcodebuild -downloadPlatform iOS
+xcrun simctl create "iPhone 16 Pro" "iPhone 16 Pro" <runtime-id>
+```

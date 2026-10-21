@@ -83,6 +83,22 @@ xcrun devicectl device process launch --terminate-existing --device <udid> --con
 11. 每帧不得创建 `MTLDevice` / `MTLCommandQueue` / pipeline / 全尺寸纹理；小缓冲按步分配是
     有意为之（见 `docs/DECISIONS.md` D4）。
 
+## 4.5 模拟器可能不存在（本机当前状态）
+
+这台机器上的 iOS 模拟器运行时已被删除（用户暂时只做 macOS 开发）。因此：
+
+- `./scripts/build.sh` / `test.sh` / `replay.sh` / `verify-all.sh` 会因没有可用
+  simulator destination 而失败 —— 这是**环境缺失，不是代码问题**，不要试图改代码绕过。
+- 恢复方式（任选其一）：
+  ```bash
+  xcodebuild -downloadPlatform iOS          # 命令行下载 iOS 运行时
+  # 或 Xcode → Settings… → Components → 下载 iOS Simulator
+  ```
+  然后 `xcrun simctl create "iPhone 16 Pro" "iPhone 16 Pro" <runtime-id>` 建设备。
+- 真机构建（`./scripts/device.sh`）不受影响，但首次连接会重新下载
+  `iOS DeviceSupport` 符号（约 4.5 GB，自动进行）。
+- 纯逻辑验证仍可运行：`./scripts/host-smoke.sh` 不依赖 Xcode/simulator。
+
 ## 5. 已知环境坑（都已在脚本处理）
 
 | 坑 | 说明 |
