@@ -63,7 +63,7 @@ final class FlowRenderer: NSObject, MTKViewDelegate {
     /// Small pool of shared readback buffers so several captures can be in flight.
     private var readbackPool: [MTLBuffer] = []
     private var readbackCursor = 0
-    nonisolated private let pngQueue = DispatchQueue(label: "flow.capture.png", qos: .utility)
+    nonisolated private static let pngQueue = DispatchQueue(label: "flow.capture.png", qos: .utility)
     /// True when composite+bloom were already encoded for the current frame
     /// (replay capture path encodes them mid-step; display reuses the result).
     private var compositeEncodedThisFrame = false
@@ -595,16 +595,14 @@ final class FlowRenderer: NSObject, MTKViewDelegate {
                   destinationBytesPerRow: capture.width * 4,
                   destinationBytesPerImage: capture.width * capture.height * 4)
         blit.endEncoding()
-        // Completion handlers run off the main thread. The buffer is only read
-        // after the GPU finished with it, so hand it over explicitly.
-        nonisolated(unsafe) let readbackRef = readback
-        let cw = capture.width, ch = capture.height
-        let queue = pngQueue
-        let isDump = dumpInterval > 0
-        commandBuffer.addCompletedHandler { _ in
-            Self.writeCapturePNG(readback: readbackRef, w: cw, h: ch, url: url,
-                                 queue: queue, quiet: isDump)
-        }
+        // IMPORTANT: the handler must NOT inherit the class's @MainActor
+        // isolation — Metal invokes it on its own "connection Queue" thread, and
+        // an actor-isolated closure there aborts in dispatch_assert_queue
+        // (SIGTRAP). Building it in a nonisolated factory keeps it nonisolated.
+        commandBuffer.addCompletedHandler(
+            Self.makeCaptureHandler(readback: readback,
+                                    w: capture.width, h: capture.height,
+                                    url: url, quiet: dumpInterval > 0))
     }
 
     private func makeReadbackIfNeeded(pixelCount: Int) -> MTLBuffer? {
@@ -626,6 +624,31 @@ final class FlowRenderer: NSObject, MTKViewDelegate {
         }
         readbackLength = needed
         return b
+    }
+
+    /// Builds a command-buffer completion handler in a NONISOLATED context so it
+    /// is not inferred as main-actor isolated.
+    nonisolated private static func makeCaptureHandler(readback: MTLBuffer, w: Int, h: Int,
+                                                       url: URL, quiet: Bool)
+        -> (any MTLCommandBuffer) -> Void {
+        let queue = pngQueue
+        return { _ in
+            writeCapturePNG(readback: readback, w: w, h: h, url: url, queue: queue, quiet: quiet)
+        }
+    }
+
+    /// Same reasoning as `makeCaptureHandler`: the stats readback runs on the
+    /// Metal completion thread, then hops to the main actor to publish results.
+    nonisolated private static func makeStatsHandler(buffer: MTLBuffer, owner: FlowRenderer)
+        -> (any MTLCommandBuffer) -> Void {
+        return { _ in
+            let ptr = buffer.contents().assumingMemoryBound(to: UInt32.self)
+            let nan = UInt(ptr[0]), inf = UInt(ptr[1])
+            Task { @MainActor in
+                owner.metrics.nanCount = nan
+                owner.metrics.infCount = inf
+            }
+        }
     }
 
     /// Nonisolated: runs on the command buffer's completion thread and touches
@@ -674,15 +697,7 @@ final class FlowRenderer: NSObject, MTKViewDelegate {
                                          height: (tex.mainDims.y + 7) / 8, depth: 1),
                                  threadsPerThreadgroup: MTLSize(width: min(ps.threadExecutionWidth, 8), height: 8, depth: 1))
         enc.endEncoding()
-        nonisolated(unsafe) let statsBuffer = buffer
-        commandBuffer.addCompletedHandler { [weak self] _ in
-            let ptr = statsBuffer.contents().assumingMemoryBound(to: UInt32.self)
-            let nan = UInt(ptr[0]), inf = UInt(ptr[1])
-            Task { @MainActor [weak self] in
-                self?.metrics.nanCount = nan
-                self?.metrics.infCount = inf
-            }
-        }
+        commandBuffer.addCompletedHandler(Self.makeStatsHandler(buffer: buffer, owner: self))
     }
 
     // MARK: Clear / Pause / Resume / Config
