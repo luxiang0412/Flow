@@ -28,7 +28,8 @@ export IPAD_SIM="<SIM_UDID_IPAD>"   # iPad Pro 11 M4 模拟器
 ./scripts/make-video.sh <fixture>     # 高码率视频（模拟器帧序列）
 ./scripts/device-video.sh <fixture>   # 高码率视频（真机帧序列）
 ./scripts/device.sh --list            # 查真机 + 签名身份 + Team ID
-./scripts/verify-all.sh               # 端到端：生成→构建→测试→6 回放→host smoke→报告
+./scripts/verify-all.sh               # 端到端：生成→构建→测试→6 回放→host smoke→清单
+./scripts/clean.sh                    # 清理可再生的构建产物（保留文档引用的证据）
 ```
 
 真机（iPad Pro 11" 3rd gen / iPad13,6 / M1，UDID `<DEVICE_UDID>`）：
@@ -158,5 +159,5 @@ swiftc 一次性统计工具都在 /tmp（不入库），需要时可用：
 | `docs/DECISIONS.md` | 架构决策与拒绝的替代方案 |
 | `docs/VISUAL-SPEC.md` | 视觉目标 + 实测数值（覆盖率/亮度/清晰度/A-B） |
 | `docs/PERFORMANCE.md` | 真机与模拟器实测、网格 A/B、待测清单 |
-| `docs/TEST-REPORT.md` | 测试清单与运行记录 |
+| `docs/TEST-REPORT.md` | 人工维护的测试报告（实测数字 + 证据）；**不要用脚本覆盖它** |
 | `docs/KNOWN-ISSUES.md` | 已知问题、已解决记录、AI 无视觉能力的说明 |
