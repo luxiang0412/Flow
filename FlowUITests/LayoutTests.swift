@@ -68,7 +68,7 @@ final class LayoutTests: XCTestCase {
         XCUIDevice.shared.orientation = .landscapeLeft
         sleep(2)
         let open = app.buttons["Open debug panel"]
-        if open.exists { open.tap() }
+        if open.exists { open.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap() }
         XCTAssertTrue(app.buttons["Pause simulation"].waitForExistence(timeout: 10))
         XCTAssertTrue(app.buttons["Clear canvas"].exists)
         XCTAssertTrue(app.buttons["replay-menu"].exists)

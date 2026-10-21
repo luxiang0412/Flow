@@ -50,7 +50,10 @@ final class FlowUITests: XCTestCase {
         if open.exists { open.tap() }
         let menu = app.buttons["replay-menu"]
         XCTAssertTrue(menu.waitForExistence(timeout: 5))
-        menu.tap()
+        // Tapping by coordinate avoids XCUITest's scroll-to-visible AX action,
+        // which fails (kAXErrorCannotComplete) for this SwiftUI Menu inside the
+        // translucent overlay even though the button is on screen.
+        menu.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
         let spiral = app.buttons["spiral"]
         if !spiral.exists { print("AXMENU:\n\(app.debugDescription)") }
         XCTAssertTrue(spiral.exists)
