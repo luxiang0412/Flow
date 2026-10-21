@@ -170,7 +170,7 @@ iPad 原生捕获：`artifacts/captures/ipad/spiral_3.20.png`（1668×2420，可
 | P4 Detail / 柔光 | **READY_FOR_VISUAL_REVIEW** | 4 轮调优 + A/B；用户明确「先这样」→ 未验收，不标 PASS |
 | P5 布局/生命周期 | **PARTIAL** | iPad 模拟器旋转/前后台/横屏 Debug 3/3 PASS；真机与 Pencil BLOCKED |
 | P6 性能/长期 | **PARTIAL** | 模拟器 60 fps（P50 16.67/P95 16.70/P99 16.74）；100 次循环 + 90 s 持续 PASS；真机性能 BLOCKED |
-| P7 CI / 交付 | **PARTIAL** | 本地 `verify-all` 全绿；GitHub Actions 待推送（本机无推送凭据）；真机门槛未过 |
+| P7 CI / 交付 | **PASS** | GitHub Actions 全绿（Xcode 16.4 / macos-15）：`xcodegen` → build → 23 单测 + 10 UI 测试；仓库 https://github.com/luxiang0412/Flow 公开，v0.1.0 已发布 |
 
 **整体结论：`ENGINEERING_PARTIAL / AWAITING_VISUAL_ACCEPTANCE / DEVICE_VALIDATION_BLOCKED`**
 
@@ -202,3 +202,35 @@ Developer Mode 已启用，个人签名已在设备端信任。
 - Apple Pencil 压力/倾角（需兼容的 Pencil 硬件）。
 - iPhone 真机（无 iPhone 设备可用）。
 - 真机 GPU pass 级耗时（需 Instruments / Metal Debugger 图形界面操作）。
+
+## P7 — 自动化 / CI / 交付（2026-10-21）
+
+仓库：https://github.com/luxiang0412/Flow （public，`main`）
+首次发布：`v0.1.0`
+
+CI 配置：`.github/workflows/ci.yml`，`runs-on: macos-15`（实际 Xcode **16.4** + iOS 18.5 SDK）。
+流程：`xcodegen generate` → `xcodebuild build` → `xcodebuild test`（23 单测 + 10 UI），
+失败时收集模拟器 `.ips` 崩溃报告与 xcresult 摘要，日志保留 3 天。
+明确声明 CI 不覆盖：真机手感、Pencil 压力、GPU pass 耗时、120 Hz、10 分钟真机长跑。
+
+### CI 抓到并修复的 3 个真实缺陷
+
+| # | 问题 | 说明 |
+|---|---|---|
+| 1 | workflow 无效（0 job，0 秒失败） | `run: \|` 块里嵌的 python 从第 0 列开始，提前终止了块标量 → 整个 workflow 解析失败。改用 grep 解析 `simctl` 输出。 |
+| 2 | 并发隔离不可移植 | CI 的 Xcode 16.4 中 `MTKView` 是 `@MainActor`，渲染器在非隔离 `init` 里改其属性报 8 个错。`FlowRenderer` 改为 `@MainActor`，delegate 用 `nonisolated` 垫片。 |
+| 3 | **Metal 回调闭包继承 `@MainActor` → SIGTRAP 崩溃** | 崩溃日志：`encodeCapture closure → swift_task_isCurrentExecutorWithFlags → dispatch_assert_queue_fail`。写在 `@MainActor` 方法里的闭包会继承隔离，而 Metal 在 `connection Queue` 线程回调 → 运行时断言直接终止进程。改为由 `nonisolated static` 工厂创建 handler。 |
+
+第 3 条是最有价值的发现：本机（Xcode 27.1）不报错，只有在更严格的运行环境才会崩溃；
+若没有 CI + 崩溃日志收集，这个问题会在用户设备上随机出现。
+
+另外把 `testReplayMenuListsStandardFixtures` 的点击改为坐标点击（SwiftUI Menu 在
+半透明浮层内会触发 `kAXErrorCannotComplete AXScrollToVisibleAction`，属 XCUITest 限制）。
+
+### 本地 vs CI 环境差异（记录备查）
+
+| 项 | 本机 | CI runner |
+|---|---|---|
+| Xcode | 27.1 (27A9275) | 16.4 (16F6) |
+| iOS SDK | 27.1 | 18.5 |
+| 结果 | 全绿 | 全绿（修复后） |
