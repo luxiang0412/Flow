@@ -1,0 +1,5 @@
+79327754c92f36176bf6266237f47b338460557a3247d5297dfb921d94963212  docs/screenshots/review/contact-sheet-01.png
+34ac2372fa2c1f92ca077829fee66ad0f23fb30d6d6a67f628648cebf25df0f8  docs/screenshots/review/device-ipad-spiral.png
+5c0565452c93e5f9a0bb5c2cae7536d3c3c1836ddf5371c6cfa1e7e3d7c19fda  docs/screenshots/review/spiral-end.png
+35e8ec001bf976def3597250dea9259acea9e805792da316179c6806ae8b3ca5  docs/screenshots/review/tap-filmstrip.png
+8b2ba3b9a5317e3f7db8c521a563ba950a046c3290dba9e93e1eb754b94c2a69  docs/screenshots/review/tap-plus2.png
