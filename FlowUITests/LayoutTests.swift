@@ -5,9 +5,11 @@ import XCTest
 final class LayoutTests: XCTestCase {
 
     override func setUp() {
+        // XCTestCase.setUp is nonisolated; nothing main-actor happens here.
         continueAfterFailure = false
     }
 
+    @MainActor
     private func launch() -> XCUIApplication {
         let app = XCUIApplication()
         app.launchArguments = ["--flow-replay", "spiral"]

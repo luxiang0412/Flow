@@ -5,6 +5,7 @@ import XCTest
 /// Replay Engine in unit/integration tests, not by synthetic gestures here.
 final class FlowUITests: XCTestCase {
 
+    @MainActor
     func launchFlow(launchArguments: [String] = []) -> XCUIApplication {
         let app = XCUIApplication()
         app.launchArguments = launchArguments
@@ -12,6 +13,7 @@ final class FlowUITests: XCTestCase {
         return app
     }
 
+    @MainActor
     func testLaunchAndCanvasAccessibilityLabel() {
         let app = launchFlow()
         XCTAssertTrue(app.wait(for: .runningForeground, timeout: 10))
@@ -20,6 +22,7 @@ final class FlowUITests: XCTestCase {
                       || app.descendants(matching: .any).matching(identifier: "Luminous Ink canvas").firstMatch.exists)
     }
 
+    @MainActor
     func testDebugControlsAccessibility() {
         let app = launchFlow()
         let open = app.buttons["Open debug panel"]
@@ -40,6 +43,7 @@ final class FlowUITests: XCTestCase {
         capture.tap()
     }
 
+    @MainActor
     func testReplayMenuListsStandardFixtures() {
         let app = launchFlow(launchArguments: [])
         let open = app.buttons["Open debug panel"]
@@ -55,6 +59,7 @@ final class FlowUITests: XCTestCase {
         XCTAssertTrue(app.buttons["Replay: spiral"].waitForExistence(timeout: 5))
     }
 
+    @MainActor
     func testCLIReplayLaunchUpgradesOverlay() {
         // Launch directly into a fixture replay (deterministic capture mode)
         let app = launchFlow(launchArguments: [
@@ -69,6 +74,7 @@ final class FlowUITests: XCTestCase {
         XCTAssertTrue(app.state == .runningForeground)
     }
 
+    @MainActor
     func testCaptureFrameProducesSimulatorScreenshotAttachment() {
         let app = launchFlow(launchArguments: ["--flow-replay", "tap"])
         sleep(3)
