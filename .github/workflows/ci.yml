@@ -1,0 +1,94 @@
+name: Flow CI
+
+# Prototype 01 CI (contract §7.2). The runner must ship full Xcode 27.x;
+# GitHub macOS-15/macOS-14 images are used as a reference but the job prints
+# the ACTUAL xcodebuild version and fails loudly if Xcode is missing. Never
+# silently uses a Beta Xcode: we install/select only what the workflow spec
+# allows and record BLOCKED otherwise.
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    name: xcodegen → build → test (simulator)
+    runs-on: macos-15
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Probe Xcode
+        run: |
+          set -o pipefail
+          xcodebuild -version
+          xcrun simctl list runtimes | head -20
+
+      - name: Install XcodeGen pin
+        run: |
+          command -v brew || { echo "no brew"; exit 1; }
+          brew list xcodegen >/dev/null 2>&1 || brew install xcodegen
+          xcodegen --version
+
+      - name: Regenerate project
+        run: |
+          xcodegen generate --spec project.yml
+          xcodebuild -list -project Flow.xcodeproj
+
+      - name: Resolve simulator
+        id: sim
+        run: |
+          python3 --version || true
+          UDID=$(xcrun simctl list devices available -j | python3 -c '
+import json,sys
+d=json.load(sys.stdin)
+for rt,devs in d["devices"].items():
+    for x in devs:
+        if x.get("isAvailable"):
+            print(x["udid"]); sys.exit(0)
+')
+          echo "udid=$UDID" >> "$GITHUB_OUTPUT"
+          echo "using simulator $UDID"
+
+      - name: Build (Debug, simulator)
+        run: |
+          mkdir -p ci
+          xcodebuild -project Flow.xcodeproj -scheme Flow \
+            -configuration Debug \
+            -destination "platform=iOS Simulator,id=${{ steps.sim.outputs.udid }}" \
+            -derivedDataPath .build CODE_SIGNING_ALLOWED=NO \
+            build 2>&1 | tee ci/build-simulator.log
+
+      - name: Test (Debug, simulator)
+        run: |
+          mkdir -p ci
+          xcodebuild -project Flow.xcodeproj -scheme Flow \
+            -configuration Debug \
+            -destination "platform=iOS Simulator,id=${{ steps.sim.outputs.udid }}" \
+            -derivedDataPath .build CODE_SIGNING_ALLOWED=NO \
+            -resultBundlePath ci/Flow-$(date +%Y%m%d-%H%M%S).xcresult \
+            test 2>&1 | tee ci/test-simulator.log
+
+      - name: Upload logs (retention 3 days)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-logs
+          path: |
+            ci/*.log
+            ci/*.xcresult
+            Flow.xcodeproj/project.pbxproj
+          retention-days: 3
+
+      - name: Strict gate
+        if: always()
+        run: |
+          grep -q "BUILD SUCCEEDED" ci/build-simulator.log || { echo "build failed"; exit 1; }
+          grep -q "TEST SUCCEEDED" ci/test-simulator.log || { echo "tests failed"; exit 1; }
+
+  note:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Device/GPU-level validation is NOT covered by CI; see docs/PERFORMANCE.md for scope."
