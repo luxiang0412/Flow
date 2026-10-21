@@ -1,0 +1,33 @@
+# Xcode
+build/
+DerivedData/
+artifacts/DerivedData/
+*.xcuserstate
+*.xcuserdatad
+xcuserdata/
+*.xcresult
+artifacts/xcresult/
+
+# Generated project (regenerable from project.yml via xcodegen)
+# Flow.xcodeproj is committed only if we need reproducibility off-machine;
+# by default CI regenerates. Keep it out of Git:
+Flow.xcodeproj/
+
+# Derived artifacts (never commit large binaries)
+artifacts/*
+!artifacts/README.md
+
+# Captures kept locally only
+docs/screenshots/*.png
+docs/screenshots/*.mp4
+docs/screenshots/*.mov
+
+# Tooling
+.DS_Store
+*.log
+.env
+secrets/
+
+# SwiftPM if ever used
+.build/
+.swiftpm/

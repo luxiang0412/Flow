@@ -1,0 +1,26 @@
+{
+ "schemaVersion": 1,
+ "name": "tap",
+ "seed": 2401,
+ "canvasAspectRatio": 0.4625,
+ "durationSeconds": 10.0,
+ "samples": [
+  {
+   "touchID": 0,
+   "phase": "began",
+   "time": 0.2,
+   "x": 0.5,
+   "y": 0.42,
+   "inputKind": "finger",
+   "force": 0.5
+  },
+  {
+   "touchID": 0,
+   "phase": "ended",
+   "time": 0.24,
+   "x": 0.5,
+   "y": 0.42,
+   "inputKind": "finger"
+  }
+ ]
+}

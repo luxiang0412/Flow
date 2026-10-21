@@ -1,0 +1,91 @@
+# Flow — Prototype 01 (XcodeGen project spec)
+# Regenerate: xcodegen generate --spec project.yml  (requires xcodegen ≥ 2.46)
+# Documented decisions: docs/DECISIONS.md
+
+name: Flow
+options:
+  bundleIdPrefix: dev.luminousink
+  deploymentTarget:
+    iOS: "18.0"
+  createIntermediateGroups: true
+  groupSortPosition: top
+  generateEmptyDirectories: false
+  xcodeVersion: "27.1"
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    SWIFT_STRICT_CONCURRENCY: complete
+    IPHONEOS_DEPLOYMENT_TARGET: "18.0"
+    TARGETED_DEVICE_FAMILY: "1,2"
+    MARKETING_VERSION: "0.1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    GENERATE_INFOPLIST_FILE: YES
+    # Device builds need a real team; simulator builds pass CODE_SIGNING_ALLOWED=NO.
+    # Set FLOW_DEV_TEAM=<10-char team id> to build onto a physical device without
+    # editing this file or fighting XcodeGen regeneration.
+    DEVELOPMENT_TEAM: ${FLOW_DEV_TEAM}
+    CODE_SIGN_STYLE: Automatic
+    # NOTE: do NOT disable code signing here — a device build must be signed.
+    # Simulator/CI invocations pass CODE_SIGNING_ALLOWED=NO explicitly
+    # (scripts/build.sh, scripts/test.sh, .github/workflows/ci.yml).
+    ENABLE_TESTABILITY: YES
+    CLANG_ENABLE_MODULES: YES
+    METAL_ENABLE_DEBUG_INFO: "INCLUDE_SOURCE"
+    GCC_C_LANGUAGE_STANDARD: gnu17
+    SWIFT_EMIT_LOC_STRINGS: YES
+
+targets:
+  Flow:
+    type: application
+    platform: iOS
+    sources:
+      - path: FlowApp
+      - path: Tests/Fixtures
+        buildPhase: resources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: dev.luminousink.prototype01
+        INFOPLIST_KEY_CFBundleDisplayName: Flow
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents: YES
+        INFOPLIST_KEY_UIRequiresFullScreen: NO
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone: "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight"
+        INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad: "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight"
+    scheme:
+      gatherCoverageData: true
+      testTargets:
+        - FlowTests
+        - FlowUITests
+
+  FlowTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: FlowTests
+      - path: Tests/Fixtures
+        buildPhase: resources
+    dependencies:
+      - target: Flow
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: dev.luminousink.prototype01.tests
+        GENERATE_INFOPLIST_FILE: YES
+
+  FlowUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - path: FlowUITests
+    dependencies:
+      - target: Flow
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: dev.luminousink.prototype01.uitests
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_TARGET_NAME: Flow
+
+# NOTE: FlowApp/Shaders/*.metal are compiled into the Flow target by XcodeGen
+# (fileType .metal → Sources build phase). Swift/C layout constants are kept in
+# sync manually — see FlowApp/Rendering/StrokeEvent.swift and FlowApp/Shaders/FlowShaders.metal.

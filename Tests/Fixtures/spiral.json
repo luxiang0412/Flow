@@ -1,0 +1,1467 @@
+{
+ "schemaVersion": 1,
+ "name": "spiral",
+ "seed": 2404,
+ "canvasAspectRatio": 0.4625,
+ "durationSeconds": 10.0,
+ "samples": [
+  {
+   "touchID": 0,
+   "phase": "began",
+   "time": 0.2,
+   "x": 0.764107,
+   "y": 0.653583,
+   "inputKind": "finger",
+   "force": 0.5
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.2,
+   "x": 0.7428,
+   "y": 0.675504,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.216667,
+   "x": 0.719006,
+   "y": 0.695328,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.233333,
+   "x": 0.693006,
+   "y": 0.712857,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.25,
+   "x": 0.665103,
+   "y": 0.727914,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.266667,
+   "x": 0.635618,
+   "y": 0.740356,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.283333,
+   "x": 0.604888,
+   "y": 0.750066,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.3,
+   "x": 0.573261,
+   "y": 0.756959,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.316667,
+   "x": 0.541091,
+   "y": 0.760984,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.333333,
+   "x": 0.508735,
+   "y": 0.76212,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.35,
+   "x": 0.476551,
+   "y": 0.760377,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.366667,
+   "x": 0.44489,
+   "y": 0.755799,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.383333,
+   "x": 0.414095,
+   "y": 0.748459,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.4,
+   "x": 0.384498,
+   "y": 0.738461,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.416667,
+   "x": 0.356413,
+   "y": 0.725937,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.433333,
+   "x": 0.330137,
+   "y": 0.711045,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.45,
+   "x": 0.305942,
+   "y": 0.693969,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.466667,
+   "x": 0.284077,
+   "y": 0.674916,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.483333,
+   "x": 0.264761,
+   "y": 0.65411,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.5,
+   "x": 0.248186,
+   "y": 0.631795,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.516667,
+   "x": 0.23451,
+   "y": 0.60823,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.533333,
+   "x": 0.223859,
+   "y": 0.583684,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.55,
+   "x": 0.216322,
+   "y": 0.558435,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.566667,
+   "x": 0.211957,
+   "y": 0.532766,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.583333,
+   "x": 0.210783,
+   "y": 0.506964,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.6,
+   "x": 0.212785,
+   "y": 0.481312,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.616667,
+   "x": 0.217913,
+   "y": 0.456091,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.633333,
+   "x": 0.226084,
+   "y": 0.431574,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.65,
+   "x": 0.237181,
+   "y": 0.408025,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.666667,
+   "x": 0.251055,
+   "y": 0.385694,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.683333,
+   "x": 0.26753,
+   "y": 0.364815,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.7,
+   "x": 0.286402,
+   "y": 0.345605,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.716667,
+   "x": 0.30744,
+   "y": 0.328259,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.733333,
+   "x": 0.330395,
+   "y": 0.312951,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.75,
+   "x": 0.354996,
+   "y": 0.299831,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.766667,
+   "x": 0.380959,
+   "y": 0.289023,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.783333,
+   "x": 0.407985,
+   "y": 0.280626,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.8,
+   "x": 0.435767,
+   "y": 0.274707,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.816667,
+   "x": 0.463994,
+   "y": 0.271311,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.833333,
+   "x": 0.49235,
+   "y": 0.27045,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.85,
+   "x": 0.520523,
+   "y": 0.272111,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.866667,
+   "x": 0.548205,
+   "y": 0.276251,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.883333,
+   "x": 0.575096,
+   "y": 0.282802,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.9,
+   "x": 0.600908,
+   "y": 0.291669,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.916667,
+   "x": 0.625368,
+   "y": 0.302731,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.933333,
+   "x": 0.648219,
+   "y": 0.315847,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.95,
+   "x": 0.669225,
+   "y": 0.330852,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.966667,
+   "x": 0.688174,
+   "y": 0.347564,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 0.983333,
+   "x": 0.704877,
+   "y": 0.365781,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.0,
+   "x": 0.719172,
+   "y": 0.385289,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.016667,
+   "x": 0.730926,
+   "y": 0.40586,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.033333,
+   "x": 0.740034,
+   "y": 0.427258,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.05,
+   "x": 0.746423,
+   "y": 0.449239,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.066667,
+   "x": 0.750049,
+   "y": 0.471556,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.083333,
+   "x": 0.750899,
+   "y": 0.493959,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.1,
+   "x": 0.748994,
+   "y": 0.516201,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.116667,
+   "x": 0.74438,
+   "y": 0.53804,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.133333,
+   "x": 0.737138,
+   "y": 0.559238,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.15,
+   "x": 0.727372,
+   "y": 0.57957,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.166667,
+   "x": 0.715218,
+   "y": 0.59882,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.183333,
+   "x": 0.700832,
+   "y": 0.616787,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.2,
+   "x": 0.684396,
+   "y": 0.633287,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.216667,
+   "x": 0.666114,
+   "y": 0.648154,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.233333,
+   "x": 0.646204,
+   "y": 0.661242,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.25,
+   "x": 0.624905,
+   "y": 0.672424,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.266667,
+   "x": 0.602464,
+   "y": 0.681597,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.283333,
+   "x": 0.579142,
+   "y": 0.688683,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.3,
+   "x": 0.555204,
+   "y": 0.693626,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.316667,
+   "x": 0.530921,
+   "y": 0.696394,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.333333,
+   "x": 0.506564,
+   "y": 0.696979,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.35,
+   "x": 0.482402,
+   "y": 0.695401,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.366667,
+   "x": 0.4587,
+   "y": 0.691698,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.383333,
+   "x": 0.435712,
+   "y": 0.685937,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.4,
+   "x": 0.413685,
+   "y": 0.678202,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.416667,
+   "x": 0.392851,
+   "y": 0.668601,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.433333,
+   "x": 0.373426,
+   "y": 0.657261,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.45,
+   "x": 0.355608,
+   "y": 0.644326,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.466667,
+   "x": 0.339576,
+   "y": 0.629957,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.483333,
+   "x": 0.325485,
+   "y": 0.614328,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.5,
+   "x": 0.31347,
+   "y": 0.597627,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.516667,
+   "x": 0.303638,
+   "y": 0.58005,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.533333,
+   "x": 0.296073,
+   "y": 0.5618,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.55,
+   "x": 0.290832,
+   "y": 0.543087,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.566667,
+   "x": 0.287946,
+   "y": 0.524122,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.583333,
+   "x": 0.287419,
+   "y": 0.505118,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.6,
+   "x": 0.289228,
+   "y": 0.486286,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.616667,
+   "x": 0.293326,
+   "y": 0.467829,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.633333,
+   "x": 0.29964,
+   "y": 0.449949,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.65,
+   "x": 0.308074,
+   "y": 0.432835,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.666667,
+   "x": 0.318509,
+   "y": 0.416667,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.683333,
+   "x": 0.330806,
+   "y": 0.401611,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.7,
+   "x": 0.344806,
+   "y": 0.387821,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.716667,
+   "x": 0.360333,
+   "y": 0.375433,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.733333,
+   "x": 0.377196,
+   "y": 0.364566,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.75,
+   "x": 0.395194,
+   "y": 0.355322,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.766667,
+   "x": 0.414113,
+   "y": 0.347782,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.783333,
+   "x": 0.433731,
+   "y": 0.342008,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.8,
+   "x": 0.453824,
+   "y": 0.338041,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.816667,
+   "x": 0.474163,
+   "y": 0.335902,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.833333,
+   "x": 0.494521,
+   "y": 0.335591,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.85,
+   "x": 0.514672,
+   "y": 0.337088,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.866667,
+   "x": 0.534395,
+   "y": 0.340352,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.883333,
+   "x": 0.553479,
+   "y": 0.345325,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.9,
+   "x": 0.571721,
+   "y": 0.351928,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.916667,
+   "x": 0.58893,
+   "y": 0.360067,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.933333,
+   "x": 0.604929,
+   "y": 0.369631,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.95,
+   "x": 0.619559,
+   "y": 0.380496,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.966667,
+   "x": 0.632675,
+   "y": 0.392522,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 1.983333,
+   "x": 0.644153,
+   "y": 0.405562,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.0,
+   "x": 0.653889,
+   "y": 0.419457,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.016667,
+   "x": 0.661798,
+   "y": 0.434041,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.033333,
+   "x": 0.66782,
+   "y": 0.449143,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.05,
+   "x": 0.671913,
+   "y": 0.464588,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.066667,
+   "x": 0.674059,
+   "y": 0.4802,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.083333,
+   "x": 0.674263,
+   "y": 0.495804,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.1,
+   "x": 0.672551,
+   "y": 0.511227,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.116667,
+   "x": 0.668968,
+   "y": 0.526301,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.133333,
+   "x": 0.663582,
+   "y": 0.540864,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.15,
+   "x": 0.656479,
+   "y": 0.55476,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.166667,
+   "x": 0.647763,
+   "y": 0.567847,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.183333,
+   "x": 0.637556,
+   "y": 0.579991,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.2,
+   "x": 0.625992,
+   "y": 0.591071,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.216667,
+   "x": 0.613221,
+   "y": 0.60098,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.233333,
+   "x": 0.599403,
+   "y": 0.609626,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.25,
+   "x": 0.584707,
+   "y": 0.616933,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.266667,
+   "x": 0.569311,
+   "y": 0.622839,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.283333,
+   "x": 0.553396,
+   "y": 0.627301,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.3,
+   "x": 0.537147,
+   "y": 0.630292,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.316667,
+   "x": 0.520752,
+   "y": 0.631803,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.333333,
+   "x": 0.504394,
+   "y": 0.631839,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.35,
+   "x": 0.488254,
+   "y": 0.630424,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.366667,
+   "x": 0.47251,
+   "y": 0.627598,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.383333,
+   "x": 0.457329,
+   "y": 0.623414,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.4,
+   "x": 0.442873,
+   "y": 0.617942,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.416667,
+   "x": 0.429289,
+   "y": 0.611265,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.433333,
+   "x": 0.416715,
+   "y": 0.603476,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.45,
+   "x": 0.405274,
+   "y": 0.594682,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.466667,
+   "x": 0.395075,
+   "y": 0.584998,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.483333,
+   "x": 0.386209,
+   "y": 0.574547,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.5,
+   "x": 0.378753,
+   "y": 0.563459,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.516667,
+   "x": 0.372765,
+   "y": 0.551869,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.533333,
+   "x": 0.368287,
+   "y": 0.539915,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.55,
+   "x": 0.365342,
+   "y": 0.527738,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.566667,
+   "x": 0.363935,
+   "y": 0.515478,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.583333,
+   "x": 0.364055,
+   "y": 0.503273,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.6,
+   "x": 0.365671,
+   "y": 0.49126,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.616667,
+   "x": 0.368738,
+   "y": 0.479568,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.633333,
+   "x": 0.373196,
+   "y": 0.468324,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.65,
+   "x": 0.378968,
+   "y": 0.457644,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.666667,
+   "x": 0.385964,
+   "y": 0.447639,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.683333,
+   "x": 0.394082,
+   "y": 0.438407,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.7,
+   "x": 0.40321,
+   "y": 0.430037,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.716667,
+   "x": 0.413225,
+   "y": 0.422607,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.733333,
+   "x": 0.423998,
+   "y": 0.416181,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.75,
+   "x": 0.435392,
+   "y": 0.410813,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.766667,
+   "x": 0.447266,
+   "y": 0.40654,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.783333,
+   "x": 0.459477,
+   "y": 0.40339,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.8,
+   "x": 0.471881,
+   "y": 0.401374,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.816667,
+   "x": 0.484333,
+   "y": 0.400493,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.833333,
+   "x": 0.496692,
+   "y": 0.400731,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.85,
+   "x": 0.50882,
+   "y": 0.402064,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.866667,
+   "x": 0.520585,
+   "y": 0.404453,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.883333,
+   "x": 0.531862,
+   "y": 0.407847,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.9,
+   "x": 0.542533,
+   "y": 0.412187,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.916667,
+   "x": 0.552492,
+   "y": 0.417403,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.933333,
+   "x": 0.56164,
+   "y": 0.423416,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.95,
+   "x": 0.569893,
+   "y": 0.430139,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.966667,
+   "x": 0.577176,
+   "y": 0.437481,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 2.983333,
+   "x": 0.583429,
+   "y": 0.445344,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 3.0,
+   "x": 0.588605,
+   "y": 0.453625,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 3.016667,
+   "x": 0.592671,
+   "y": 0.462222,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 3.033333,
+   "x": 0.595605,
+   "y": 0.471027,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 3.05,
+   "x": 0.597403,
+   "y": 0.479936,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 3.066667,
+   "x": 0.59807,
+   "y": 0.488844,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 3.083333,
+   "x": 0.597628,
+   "y": 0.497649,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 3.1,
+   "x": 0.596108,
+   "y": 0.506254,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 3.116667,
+   "x": 0.593555,
+   "y": 0.514563,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 3.133333,
+   "x": 0.590026,
+   "y": 0.522489,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 3.15,
+   "x": 0.585586,
+   "y": 0.529951,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 3.166667,
+   "x": 0.580309,
+   "y": 0.536875,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "moved",
+   "time": 3.183333,
+   "x": 0.57428,
+   "y": 0.543195,
+   "inputKind": "finger"
+  },
+  {
+   "touchID": 0,
+   "phase": "ended",
+   "time": 3.2,
+   "x": 0.57428,
+   "y": 0.543195,
+   "inputKind": "finger"
+  }
+ ],
+ "expectVisibleCurlAtSeconds": 3.2
+}
